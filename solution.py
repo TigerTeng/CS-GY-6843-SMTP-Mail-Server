@@ -1,7 +1,7 @@
 from socket import *
 
 
-def smtp_client(port=1025, mailserver='127.0.0.1'):
+def smtp_client(port, mailserver):
     msg = "\r\n My message"
     endmsg = "\r\n.\r\n"
 
@@ -11,13 +11,13 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
 
     # Fill in start
     clientSocket = socket(AF_INET, SOCK_STREAM)
-    clientSocket.connect(mailserver)
+    clientSocket.connect((mailserver, port))
     # Fill in end
 
     recv = clientSocket.recv(1024).decode()
     #print(recv) #You can use these print statement to validate return codes from the server.
     #if recv[:3] != '220':
-    #    print('220 reply not received from server.')
+        #print('220 reply not received from server.')
 
     # Send HELO command and print server response.
     heloCommand = 'HELO Alice\r\n'
@@ -25,11 +25,11 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     recv1 = clientSocket.recv(1024).decode()
     #print(recv1)
     #if recv1[:3] != '250':
-    #    print('250 reply not received from server.')
+        #print('250 reply not received from server.')
 
     # Send MAIL FROM command and handle server response.
     # Fill in start
-    mailFrom = "MAIL FROM:<tiger980303@gmail.com>\r\n"
+    mailFrom = "MAIL FROM:<tyt228@nyu.edu>\r\n"
     clientSocket.send(mailFrom.encode())
     recv2 = clientSocket.recv(1024).decode()
     #print("Mail from response" + recv2)
